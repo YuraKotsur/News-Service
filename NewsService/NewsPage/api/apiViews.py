@@ -5,49 +5,61 @@ from .serializer import *
 
 
 
-
-@api_view(['GET','PUT','DELETE'])
+@api_view(['GET'])
 def article_list(request, pk):
 
-    try:
-        article = Article.objects.get(pk=pk)
-    except Article.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
     if request.method == 'GET':
+        article = Article.objects.all().filter(pk=pk)
         serializer = ArticleSerializer(article, many=True)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        serializer = ArticleSerializer(article, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@api_view(['PUT'])
+def vote(request, pk):
+    try:
+        article = Article.objects.all().get(pk=pk)
+    except Article.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    elif request.method == 'DELETE':
-        article.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    if request.method == 'PUT':
+        article.amount_of_votes += 1
+        article.save()
+        serializers = AmounOfVoteSerializer(article, data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'POST'])
-def article_detail(request):
-
+@api_view(['GET','POST', 'DELETE'])
+def create_article(request):
     try:
         article = Article.objects.all()
     except Article.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = ArticleSerializer(article, many=True)
+        serializer = CreateArticleSerializer(article, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = ArticleSerializer(data=request.data)
+        serializer = CreateArticleSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'DELETE'])
+def delete_article(request, pk):
+
+    try:
+        article = Article.objects.all().get(pk=pk)
+    except Article.DoesNotExist:
+        return Response('there is no article with this id:' + pk, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'DELETE':
+        article.delete()
+        return Response('Article was successfuly deleted')
+
 
 
 

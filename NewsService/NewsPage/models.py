@@ -7,15 +7,9 @@ from django.db import models
 # - We should have a recurring job running once a day to reset post upvotes count
 
 
-class CategoryAbstract(models.Model):
-    title                       = models.CharField(max_length=200, verbose_name='Title')
-
-    def __str__(self):
-        return self.title
 
 class ArticleAbstract(models.Model):
 
-    category                    = models.ForeignKey(CategoryAbstract, on_delete=models.CASCADE, verbose_name='Category' )
     title                       = models.CharField(max_length=250, verbose_name='Title')
     article_content             = models.TextField(verbose_name='Content')
     article_creation_date       = models.DateTimeField(auto_now_add=True, verbose_name='Creation date')
@@ -40,8 +34,6 @@ class CommentAbstract(models.Model):
 class Comment(CommentAbstract):
     pass
 
-class Category(CategoryAbstract):
-    pass
 
 class Article(ArticleAbstract):
     pass
