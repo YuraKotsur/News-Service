@@ -1,8 +1,6 @@
 # News-Service
 
 🛠️ Technologies
-
-
-Python
-Django
-PostgreSQL
+  Python
+  Django
+  PostgreSQL
