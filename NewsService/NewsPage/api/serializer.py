@@ -31,5 +31,12 @@ class ArticleSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
+class EditArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = [
+            'title',
+            'article_content',
+            'author_name',
+        ]
 
