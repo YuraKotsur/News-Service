@@ -3,6 +3,7 @@
 #🛠️ Technologies
 - Python
 - Django
+- Django Rest Framework
 - PostgreSQL
   
 # Api's Schema
