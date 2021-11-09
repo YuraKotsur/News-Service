@@ -4,7 +4,7 @@
 - Python
 - Django
 - Django Rest Framework
-- PostgreSQL
+- SQlite3
   
 # Api's Schema
 
