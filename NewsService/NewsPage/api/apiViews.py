@@ -6,10 +6,10 @@ from .serializer import *
 
 
 @api_view(['GET'])
-def article_list(request, pk):
+def newsPageView(request):
 
     if request.method == 'GET':
-        article = Article.objects.all().filter(pk=pk)
+        article = Article.objects.all()
         serializer = ArticleSerializer(article, many=True)
         return Response(serializer.data)
 
@@ -73,7 +73,6 @@ def article_edit(request, pk):
                 serializers.save()
                 return Response(serializers.data, status.HTTP_201_CREATED)
             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 
