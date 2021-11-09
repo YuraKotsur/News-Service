@@ -1,12 +1,17 @@
 # News-Service
 
-🛠️ Technologies
+#🛠️ Technologies
 - Python
 - Django
 - PostgreSQL
   
 # Api's Schema
-- /article/id
-- /article_create/
-- /article_delete/id
-- /article_edit/id
+
+|  Endpoint         |  HTTP method  | CRUD method | Result           |
+| ----------------- | ------------- | ----------- | ---------------- |
+| /article/id       |    GET        |    READ     | Get all articles |
+| /article/id/vote  |    PUT        |   UPDATE    | votes for the article|
+| /article_create/  |    POST       |   CREATE    | Create article   |
+| /article_delete/id|    DELETE     |   DELETE    | Delete article   |
+| /article_edit/id  |    PUT        |   UPDATE    | Edit article     |
+
